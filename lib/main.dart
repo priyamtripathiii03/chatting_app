@@ -1,6 +1,7 @@
 import 'package:chatting_app/views/auth/auth_manager.dart';
 import 'package:chatting_app/views/auth/sign_in.dart';
 import 'package:chatting_app/views/auth/sign_up.dart';
+import 'package:chatting_app/views/home/chat_page.dart';
 import 'package:chatting_app/views/home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/signIn', page: () => const SignIn(),),
         GetPage(name: '/signUp', page: () => const SignUp(),),
         GetPage(name: '/home', page: () =>  const HomePage(),),
+        GetPage(name: '/chat', page: () =>  const ChatPage(),),
       ],
     );
   }

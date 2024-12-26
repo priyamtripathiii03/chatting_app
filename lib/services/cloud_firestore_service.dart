@@ -1,3 +1,4 @@
+import 'package:chatting_app/model/chat_model.dart';
 import 'package:chatting_app/model/user_model.dart';
 import 'package:chatting_app/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,5 +35,23 @@ Future<QuerySnapshot<Map<String, dynamic>>> readAllUserFromCloudFireStore()
     return await _fireStore.collection("users").where("email",isNotEqualTo: user!.email).get();
 
   }
+ Future<void> addChatInFireStore(ChatModel chat) async {
+    String? sender = chat.sender;
+    String? receiver = chat.receiver;
+    List doc = [sender,receiver];
+    doc.sort();
+    String docId = doc.join("_");
 
+    await _fireStore.collection("chatroom").doc().collection("chat").add(chat.toMap(chat));
+ }
+
+ Stream<QuerySnapshot<Map<String, dynamic>>> readChatFromFireStore(String receiver)
+ {
+   String sender =AuthService.authService.getCurrentUser()!.email!;
+   List doc = [sender,receiver];
+   doc.sort();
+   String docId = doc.join("_");
+   return _fireStore.collection("chatroom").doc(docId).collection("chat").snapshots();
+
+ }
 }

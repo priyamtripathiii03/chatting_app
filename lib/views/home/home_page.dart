@@ -1,3 +1,4 @@
+import 'package:chatting_app/controller/chat_controller.dart';
 import 'package:chatting_app/model/user_model.dart';
 import 'package:chatting_app/services/auth_service.dart';
 import 'package:chatting_app/services/cloud_firestore_service.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+var chatController = Get.put(ChatController());
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -22,7 +24,7 @@ class HomePage extends StatelessWidget {
             }
           if(snapshot.connectionState == ConnectionState.waiting)
             {
-              return Center(child: CircularProgressIndicator(),);
+              return const Center(child: CircularProgressIndicator(),);
             }
               Map? data = snapshot.data!.data();
               UserModel userModel = UserModel.fromMap(data!);
@@ -59,10 +61,10 @@ class HomePage extends StatelessWidget {
           builder: (context, snapshot){
         if(snapshot.connectionState==ConnectionState.waiting)
           {
-            return Center(child: CircularProgressIndicator(),);
+            return const Center(child: CircularProgressIndicator(),);
           }
         List data = snapshot.data!.docs;
-        List<UserModel> userList =[];
+        List<UserModel> userList = [];
         for(var user in data)
           {
            userList.add(UserModel.fromMap( user.data()));
@@ -70,6 +72,14 @@ class HomePage extends StatelessWidget {
         return ListView.builder(
           itemCount: userList.length,
           itemBuilder: (context, index){
+            return ListTile(
+              onTap: () {
+                chatController.getReceiver(userList[index].email!, userList[index].name!);
+                Get.toNamed('/chat');
+              },
+              leading: CircleAvatar(backgroundImage: NetworkImage(userList[index].image!),),
+              title: Text(userList[index].name!),
+            );
           },
         );
     },
