@@ -1,6 +1,6 @@
 import 'package:chatting_app/controller/auth_controller.dart';
 import 'package:chatting_app/services/auth_service.dart';
-import 'package:chatting_app/views/auth/google_auth.dart';
+import 'package:chatting_app/services/google_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,7 +42,7 @@ class SignIn extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         TextField(
@@ -54,7 +54,7 @@ class SignIn extends StatelessWidget {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            suffixIcon: Icon(Icons.visibility_off),
+                            suffixIcon: const Icon(Icons.visibility_off),
                           ),
                         ),
                         const SizedBox(
@@ -126,12 +126,9 @@ class SignIn extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        SignInButton(Buttons.google, onPressed: () async {
-                          await GoogleAuth.googleAuth.signInWithGoogle();
+                        SignInButton(Buttons.google, onPressed: (){
+                          GoogleAuthService.googleAuthService.signInWithGoogle();
                           User? user = AuthService.authService.getCurrentUser();
-                          if (user != null ) {
-                            Get.offAndToNamed('/home');
-                          }
                         }),
                       ],
 
@@ -141,7 +138,7 @@ class SignIn extends StatelessWidget {
                         onPressed: () {
                           Get.toNamed('/signUp');
                         },
-                        child: Text(
+                        child: const Text(
                           '''Don't have account ? Sign Up''',
                           style: TextStyle(
                             letterSpacing: 0.5,

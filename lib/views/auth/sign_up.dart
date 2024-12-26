@@ -1,5 +1,6 @@
 import 'package:chatting_app/controller/auth_controller.dart';
 import 'package:chatting_app/services/auth_service.dart';
+import 'package:chatting_app/services/cloud_firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,7 +43,7 @@ class SignUp extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextField(
@@ -54,7 +55,7 @@ class SignUp extends StatelessWidget {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          suffixIcon: Icon(Icons.visibility_off),
+                          suffixIcon: const Icon(Icons.visibility_off),
                         ),
                       ),
                       const SizedBox(
@@ -72,7 +73,7 @@ class SignUp extends StatelessWidget {
                                 .createAccountWithEmailAndPassword(
                                     controller.txtEmail.text,
                                     controller.txtPassword.text);
-
+                            CloudFireStoreService.cloudFireStoreService.inserUserIntroFireStore(AuthService.authService.getCurrentUser()!.email!);
                             Get.back();
 
                             controller.txtEmail.clear();
