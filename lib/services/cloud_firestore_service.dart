@@ -51,7 +51,28 @@ Future<QuerySnapshot<Map<String, dynamic>>> readAllUserFromCloudFireStore()
    List doc = [sender,receiver];
    doc.sort();
    String docId = doc.join("_");
-   return _fireStore.collection("chatroom").doc(docId).collection("chat").snapshots();
+   return _fireStore.collection("chatroom").doc(docId).collection("chat").orderBy("time",descending: false).snapshots();
+ }
 
+ Future<void> updateChat(String receiver,String message,String dcId)
+ async {
+   String sender =AuthService.authService.getCurrentUser()!.email!;
+   List doc = [sender,receiver];
+   doc.sort();
+   String docId = doc.join("_");
+   await _fireStore.collection("chatroom").doc(docId).collection("chat").doc(dcId).update(
+     {
+       'message': message
+     },
+   );
+ }
+
+ Future<void> removeChat(String dcId,String receiver)
+ async {
+   String sender =AuthService.authService.getCurrentUser()!.email!;
+   List doc = [sender,receiver];
+   doc.sort();
+   String docId = doc.join("_");
+   await _fireStore.collection("chatroom").doc(docId).collection("chat").doc(dcId).delete();
  }
 }
