@@ -89,10 +89,10 @@ class SignIn extends StatelessWidget {
                           onPressed: () async {
                             String response = await AuthService.authService
                                 .signInWithEmailAndPassword(
-                                    controller.txtEmail.text,
-                                    controller.txtPassword.text);
+                                controller.txtEmail.text,
+                                controller.txtPassword.text);
                             User? user =
-                                AuthService.authService.getCurrentUser();
+                            AuthService.authService.getCurrentUser();
                             if (user != null && response == "Success") {
                               Get.offAndToNamed('/home');
                             } else {

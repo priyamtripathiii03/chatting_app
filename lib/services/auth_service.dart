@@ -5,7 +5,7 @@ class AuthService {
   AuthService._();
   static AuthService authService = AuthService._();
 
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   // Account Create
   Future<void> createAccountWithEmailAndPassword(String email, String password) async {

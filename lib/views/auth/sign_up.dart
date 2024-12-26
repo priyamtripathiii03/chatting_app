@@ -1,4 +1,5 @@
 import 'package:chatting_app/controller/auth_controller.dart';
+import 'package:chatting_app/model/user_model.dart';
 import 'package:chatting_app/services/auth_service.dart';
 import 'package:chatting_app/services/cloud_firestore_service.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,33 @@ class SignUp extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextField(
+                        controller: controller.txtName,
+                        decoration: InputDecoration(
+                          labelText: 'Name',
+                          hintText: 'Enter your name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        controller: controller.txtPhone,
+                        decoration: InputDecoration(
+                          labelText: 'phone',
+                          hintText: 'Enter your phone',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
                         controller: controller.txtEmail,
                         decoration: InputDecoration(
                           labelText: 'E-mail',
@@ -61,6 +89,22 @@ class SignUp extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
+                      TextField(
+                        controller: controller.txtConfirmPassword,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: 'Confirm Password',
+                          hintText: 'Enter your Confirm password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          suffixIcon: const Icon(Icons.visibility_off),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+
                       TextButton(
                           onPressed: () {},
                           child: const Text('Already have Account? Sign Up')),
@@ -68,16 +112,24 @@ class SignUp extends StatelessWidget {
                         height: 20,
                       ),
                       ElevatedButton(
-                          onPressed: () {
-                            AuthService.authService
-                                .createAccountWithEmailAndPassword(
-                                    controller.txtEmail.text,
-                                    controller.txtPassword.text);
-                            CloudFireStoreService.cloudFireStoreService.inserUserIntroFireStore(AuthService.authService.getCurrentUser()!.email!);
-                            Get.back();
+                          onPressed: () async {
+                            if(controller.txtPassword.text==controller.txtConfirmPassword.text)
+                            {
+                              await AuthService.authService
+                                  .createAccountWithEmailAndPassword(
+                                  controller.txtEmail.text,
+                                  controller.txtPassword.text);
+                              UserModel user =UserModel(name: controller.txtName.text, email: controller.txtEmail.text, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s", phone: controller.txtPhone.text, token: "----");
+                              CloudFireStoreService.cloudFireStoreService.insertUserIntroFireStore(user);
+                              Get.back();
+                              controller.txtEmail.clear();
+                              controller.txtPassword.clear();
+                              controller.txtConfirmPassword.clear();
+                              controller.txtName.clear();
+                              controller.txtPhone.clear();
+                            }
 
-                            controller.txtEmail.clear();
-                            controller.txtPassword.clear();
+
                           },
                           child: const Text('Sign Up'))
                     ],

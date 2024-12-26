@@ -8,6 +8,6 @@ class AuthManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (AuthService.authService.getCurrentUser()==null)?const SignIn():const HomePage();
+    return (AuthService.authService.getCurrentUser()==null)?const SignIn(): const HomePage();
   }
 }

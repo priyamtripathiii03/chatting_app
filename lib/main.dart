@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => const AuthManager(),),
         GetPage(name: '/signIn', page: () => const SignIn(),),
         GetPage(name: '/signUp', page: () => const SignUp(),),
-        GetPage(name: '/home', page: () => const HomePage(),),
+        GetPage(name: '/home', page: () =>  const HomePage(),),
       ],
     );
   }

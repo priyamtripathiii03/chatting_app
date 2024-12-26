@@ -1,4 +1,6 @@
+import 'package:chatting_app/model/user_model.dart';
 import 'package:chatting_app/services/auth_service.dart';
+import 'package:chatting_app/services/cloud_firestore_service.dart';
 import 'package:chatting_app/services/google_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,52 +13,30 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              DrawerHeader(
-                  child: CircleAvatar(
-                radius: 50,
-                backgroundImage: AuthService
-                            .authService
-                            .getCurrentUser()!
-                            .photoURL ==
-                        null
-                    ? NetworkImage(
-                        'https://cdn-icons-png.flaticon.com/512/3135/3135715.png')
-                    : NetworkImage(
-                        AuthService.authService.getCurrentUser()!.photoURL!),
-              )),
-              Row(
+        width: 250,
+        child: FutureBuilder(future: CloudFireStoreService.cloudFireStoreService.readCurrentUserFromFireStore(),
+            builder: (context,snapshot){
+          if(snapshot.hasError)
+            {
+              return Center(child: Text(snapshot.error.toString()));
+            }
+          if(snapshot.connectionState == ConnectionState.waiting)
+            {
+              return Center(child: CircularProgressIndicator(),);
+            }
+              Map? data = snapshot.data!.data();
+              UserModel userModel = UserModel.fromMap(data!);
+              return Column(
                 children: [
-                  Icon(Icons.email),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    AuthService.authService.getCurrentUser()!.email!,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  )
+                  DrawerHeader(child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: NetworkImage(userModel.image!),)),
+                  Text(userModel.name!),
+                  Text(userModel.email!),
+                  Text(userModel.phone!),
                 ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Icon(Icons.drive_file_rename_outline),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    AuthService.authService.getCurrentUser()!.displayName!,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  )
-                ],
-              ),
-            ],
-          ),
+              );
+            }
         ),
       ),
       appBar: AppBar(
@@ -74,6 +54,25 @@ class HomePage extends StatelessWidget {
               },
               icon: const Icon(Icons.logout))
         ],
+      ),
+      body: FutureBuilder(future: CloudFireStoreService.cloudFireStoreService.readAllUserFromCloudFireStore(),
+          builder: (context, snapshot){
+        if(snapshot.connectionState==ConnectionState.waiting)
+          {
+            return Center(child: CircularProgressIndicator(),);
+          }
+        List data = snapshot.data!.docs;
+        List<UserModel> userList =[];
+        for(var user in data)
+          {
+           userList.add(UserModel.fromMap( user.data()));
+          }
+        return ListView.builder(
+          itemCount: userList.length,
+          itemBuilder: (context, index){
+          },
+        );
+    },
       ),
     );
   }
