@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(name: '/', page: () => const AuthManager(),),
         GetPage(name: '/signIn', page: () => const SignIn(),),
