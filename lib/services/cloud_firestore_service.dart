@@ -5,11 +5,11 @@ class CloudFireStoreService
   CloudFireStoreService._();
   static CloudFireStoreService cloudFireStoreService = CloudFireStoreService._();
 
-  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
   Future<void> inserUserIntroFireStore(String email)
   async {
-    await fireStore.collection("users").doc(email).set({
+    await _fireStore.collection("users").doc(email).set({
       'email':email
     });
   }
