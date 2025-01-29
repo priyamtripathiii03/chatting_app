@@ -16,7 +16,7 @@ class ChatPage extends StatelessWidget {
         title: Text(chatController.receiverName.value),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             Expanded(
@@ -100,7 +100,7 @@ class ChatPage extends StatelessWidget {
                                       .email!)
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
-                          child: Text(chatList[index].message!),
+                          child: Text(chatList[index].message),
                         ),
                       ),
                     ),
@@ -114,7 +114,7 @@ class ChatPage extends StatelessWidget {
             TextField(
               controller: chatController.txtMessage,
               decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                       onPressed: () async {
                         ChatModel chat = ChatModel(
@@ -128,7 +128,7 @@ class ChatPage extends StatelessWidget {
                         await CloudFireStoreService.cloudFireStoreService
                             .addChatInFireStore(chat);
                       },
-                      icon: Icon(Icons.send))),
+                      icon: const Icon(Icons.send))),
             )
           ],
         ),
