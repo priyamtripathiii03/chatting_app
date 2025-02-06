@@ -1,3 +1,5 @@
+
+
 import 'package:chatting_app/model/chat_model.dart';
 import 'package:chatting_app/services/auth_service.dart';
 import 'package:chatting_app/services/cloud_firestore_service.dart';
@@ -13,10 +15,14 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(chatController.receiverName.value),
+        title: Text(
+          chatController.receiverName.value,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.teal,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
             Expanded(
@@ -41,39 +47,40 @@ class ChatPage extends StatelessWidget {
                     docIdList.add(snap.id);
                     chatList.add(ChatModel.fromMap(snap.data() as Map));
                   }
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: List.generate(
-                      chatList.length,
-                      (index) => GestureDetector(
+                  return ListView.builder(
+                    reverse: false, // Reverse the chat order so that new messages appear at the bottom
+                    itemCount: chatList.length,
+                    itemBuilder: (context, index) {
+                      bool isSender = chatList[index].sender ==
+                          AuthService.authService.getCurrentUser()!.email!;
+                      return GestureDetector(
                         onLongPress: () {
-                          if (chatList[index].sender ==
-                              AuthService.authService
-                                  .getCurrentUser()!
-                                  .email!) {
+                          if (isSender) {
                             chatController.txtUpdateMessage =
-                                TextEditingController(
-                                    text: chatList[index].message);
+                                TextEditingController(text: chatList[index].message);
                             showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  title: const Text('Update'),
+                                  title: const Text('Update Message'),
                                   content: TextField(
                                     controller: chatController.txtUpdateMessage,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Edit your message',
+                                    ),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
-                                        String dcId = docIdList[index];
+                                        String docId = docIdList[index];
                                         CloudFireStoreService
                                             .cloudFireStoreService
                                             .updateChat(
-                                                chatController
-                                                    .receiverEmail.value,
-                                                chatController
-                                                    .txtUpdateMessage.text,
-                                                dcId);
+                                            chatController
+                                                .receiverEmail.value,
+                                            chatController
+                                                .txtUpdateMessage.text,
+                                            docId);
                                         Get.back();
                                       },
                                       child: const Text('Update'),
@@ -85,54 +92,77 @@ class ChatPage extends StatelessWidget {
                           }
                         },
                         onDoubleTap: () {
-                          if(chatList[index].sender == AuthService.authService.getCurrentUser()!.email!)
-                            {
-                              CloudFireStoreService.cloudFireStoreService.removeChat(docIdList[index], chatController.receiverEmail.value);
-                            }
-
+                          if (isSender) {
+                            CloudFireStoreService.cloudFireStoreService.removeChat(
+                                docIdList[index], chatController.receiverEmail.value);
+                          }
                         },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
-                          alignment: (chatList[index].sender ==
-                                  AuthService.authService
-                                      .getCurrentUser()!
-                                      .email!)
+                        child: Align(
+                          alignment: isSender
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
-                          child: Text(chatList[index].message),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: isSender
+                                  ? Colors.teal[200]
+                                  : Colors.grey[200],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              chatList[index].message,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   );
                 },
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: chatController.txtMessage,
-              decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                      onPressed: () async {
-                        ChatModel chat = ChatModel(
-                            sender: AuthService.authService
-                                .getCurrentUser()!
-                                .email!,
-                            receiver: chatController.receiverEmail.value,
-                            message: chatController.txtMessage.text,
-                            time: Timestamp.now());
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TextField(
+                controller: chatController.txtMessage,
+                decoration: InputDecoration(
+                  hintText: 'Type your message...',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  suffixIcon: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(onPressed: () {
 
-                        await CloudFireStoreService.cloudFireStoreService
-                            .addChatInFireStore(chat);
-                      },
-                      icon: const Icon(Icons.send))),
-            )
+                      }, icon: const Icon(Icons.attach_file)),
+                      IconButton(
+                        onPressed: () async {
+                          if (chatController.txtMessage.text.isNotEmpty) {
+                            ChatModel chat = ChatModel(
+                              sender: AuthService.authService.getCurrentUser()!.email!,
+                              receiver: chatController.receiverEmail.value,
+                              message: chatController.txtMessage.text,
+                              time: Timestamp.now(),
+                            );
+                            await CloudFireStoreService.cloudFireStoreService.addChatInFireStore(chat);
+                            chatController.txtMessage.clear();
+                          }
+                        },
+                        icon: const Icon(Icons.send, color: Colors.teal),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
+
     );
   }
 }

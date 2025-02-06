@@ -7,6 +7,7 @@ class ChatController extends GetxController
   RxString receiverName = "".obs;
   TextEditingController txtMessage = TextEditingController();
   TextEditingController txtUpdateMessage = TextEditingController();
+  TextEditingController isFabHovered = TextEditingController();
   void getReceiver(String email, String name)
   {
     receiverName.value = name;

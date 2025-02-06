@@ -19,7 +19,8 @@ class HomePage extends StatelessWidget {
       drawer: Drawer(
         width: 270,
         child: FutureBuilder(
-          future: CloudFireStoreService.cloudFireStoreService.readCurrentUserFromFireStore(),
+          future: CloudFireStoreService.cloudFireStoreService
+              .readCurrentUserFromFireStore(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
@@ -38,15 +39,19 @@ class HomePage extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 45,
-                        backgroundImage: NetworkImage(userModel.image ?? 'https://www.w3schools.com/w3images/avatar2.png'),
+                        backgroundImage: NetworkImage(userModel.image ??
+                            'https://www.w3schools.com/w3images/avatar2.png'),
                       ),
                       const SizedBox(height: 10),
                       Text(
                         userModel.name ?? 'Name not available',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       const SizedBox(height: 5),
-                      Text(userModel.email ?? 'Email not available', style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                      Text(userModel.email ?? 'Email not available',
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.grey)),
                     ],
                   ),
                 ),
@@ -114,7 +119,8 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               ),
             ),
           ),
@@ -122,7 +128,8 @@ class HomePage extends StatelessWidget {
           // FutureBuilder to get the list of users (chat list)
           Expanded(
             child: FutureBuilder(
-              future: CloudFireStoreService.cloudFireStoreService.readAllUserFromCloudFireStore(),
+              future: CloudFireStoreService.cloudFireStoreService
+                  .readAllUserFromCloudFireStore(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -145,31 +152,38 @@ class HomePage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ListTile(
                       onTap: () {
-                        chatController.getReceiver(userList[index].email!, userList[index].name!);
+                        chatController.getReceiver(
+                            userList[index].email!, userList[index].name!);
                         Get.toNamed('/chat');
                       },
                       leading: CircleAvatar(
                         radius: 30,
-                        backgroundImage: NetworkImage(userList[index].image ?? 'https://www.w3schools.com/w3images/avatar2.png'),
+                        backgroundImage: NetworkImage(userList[index].image ??
+                            'https://www.w3schools.com/w3images/avatar2.png'),
                       ),
-                      title: Text(userList[index].name ?? 'Name not available', style: const TextStyle(fontWeight: FontWeight.bold)),
+                      title: Text(userList[index].name ?? 'Name not available',
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Last message or status here',
-                            style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                            style: TextStyle(
+                                color: Colors.grey[600], fontSize: 14),
                           ),
                           Text(
                             '12:30 PM',
-                            style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                            style: TextStyle(
+                                color: Colors.grey[500], fontSize: 12),
                           ),
                         ],
                       ),
-                      trailing: const Icon(Icons.chat_bubble_outline, color: Colors.green),
+                      trailing: const Icon(Icons.chat_bubble_outline,
+                          color: Colors.green),
                     );
                   },
-                  separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.grey),
+                  separatorBuilder: (context, index) =>
+                      const Divider(height: 1, color: Colors.grey),
                 );
               },
             ),
@@ -184,6 +198,26 @@ class HomePage extends StatelessWidget {
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.message),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.teal,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chats',
+          ),
+          BottomNavigationBarItem(
+
+            icon: Icon(Icons.update_sharp),
+            label: 'Updates',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.call),
+            label: 'Calls',
+          ),
+        ],
       ),
     );
   }
