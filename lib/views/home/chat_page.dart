@@ -16,10 +16,11 @@ class ChatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          chatController.receiverName.value,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          chatController.receiverName.value.toUpperCase(),
+          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
         ),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF075E54),
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -132,7 +133,7 @@ class ChatPage extends StatelessWidget {
                   hintText: 'Type your message...',
                   border: OutlineInputBorder(),
                   filled: true,
-                  fillColor: Colors.grey[200],
+                  fillColor: Colors.grey.shade200,
                   suffixIcon: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

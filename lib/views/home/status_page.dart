@@ -6,68 +6,58 @@ class StatusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // AppBar with 'Status' title
       appBar: AppBar(
         title: const Text(
           'Status',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF075E54), // WhatsApp green
+        backgroundColor: const Color(0xFF075E54), // WhatsApp green colour
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {
-              // Add functionality for more options (e.g., settings)
-            },
-            icon: const Icon(Icons.more_vert),
+            onPressed: () {},
+            icon: const Icon(Icons.more_vert,color: Colors.white,),
             tooltip: 'More options',
           ),
         ],
-      ),
 
-      // Body with list of statuses
+      ),
       body: Column(
         children: [
-          // My Status Section (WhatsApp style)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: ListTile(
-              onTap: () {
-                // Navigate to 'My Status' screen to add/update status
-              },
+              onTap: () {},
               leading: const CircleAvatar(
                 radius: 30,
                 backgroundColor: Colors.grey,
                 child: Icon(Icons.add_a_photo, color: Colors.white),
               ),
-              title: const Text('My Status', style: TextStyle(fontWeight: FontWeight.bold)),
+              title: const Text('My Status',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               subtitle: const Text('Tap to update your status'),
             ),
           ),
-
           const Divider(height: 1),
-
-          // List of other users' statuses
           Expanded(
             child: ListView.separated(
-              itemCount: 10, // Example for 10 users
+              itemCount: 10,
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: CircleAvatar(
                     radius: 30,
-                    backgroundImage: NetworkImage('https://via.placeholder.com/150'), // User profile picture
+                    backgroundImage:
+                        NetworkImage('https://via.placeholder.com/150'),
                   ),
                   title: const Text(
-                    'User Name', // Replace with actual user name
+                    'User Name',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: const Text(
-                    'Today, 10:30 AM', // Replace with actual status time
+                    'Today, 10:30 AM',
                     style: TextStyle(color: Colors.grey, fontSize: 12),
                   ),
-                  onTap: () {
-                    // Navigate to view status in full screen
-                  },
+                  onTap: () {},
                 );
               },
               separatorBuilder: (context, index) => const Divider(height: 1),
@@ -76,13 +66,10 @@ class StatusPage extends StatelessWidget {
         ],
       ),
 
-      // Floating Action Button (FAB) to add a new status
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigate to screen for adding a new status
-        },
-        backgroundColor: const Color(0xFF075E54), // WhatsApp green
-        child: const Icon(Icons.camera_alt),
+        onPressed: () {},
+        backgroundColor: const Color(0xFF075E54),
+        child: const Icon(Icons.camera_alt,color: Colors.white,),
       ),
     );
   }

@@ -77,14 +77,6 @@ class SignIn extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        // TextButton(
-                        //     onPressed: () {
-                        //       Get.toNamed('/signUp');
-                        //     },
-                        //     child: const Text("Don't have Account? Sign Up")),
-                        // const SizedBox(
-                        //   height: 20,
-                        // ),
                         ElevatedButton(
                           onPressed: () async {
                             String response = await AuthService.authService
@@ -94,7 +86,7 @@ class SignIn extends StatelessWidget {
                             User? user =
                             AuthService.authService.getCurrentUser();
                             if (user != null && response == "Success") {
-                              Get.offAndToNamed('/home');
+                              Get.offAndToNamed('/navigationBar');
                             } else {
                               Get.snackbar('Sign In Failed !', response);
                             }

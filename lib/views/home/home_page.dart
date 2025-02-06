@@ -15,7 +15,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Drawer (side menu)
       drawer: Drawer(
         width: 270,
         child: FutureBuilder(
@@ -59,16 +58,12 @@ class HomePage extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.settings),
                   title: const Text('Settings'),
-                  onTap: () {
-                    // Add navigation for settings
-                  },
+                  onTap: () {},
                 ),
                 ListTile(
                   leading: const Icon(Icons.help),
                   title: const Text('Help'),
-                  onTap: () {
-                    // Add navigation for help
-                  },
+                  onTap: () {},
                 ),
               ],
             );
@@ -76,11 +71,11 @@ class HomePage extends StatelessWidget {
         ),
       ),
 
-      // AppBar (title bar)
+      // AppBar
       appBar: AppBar(
         title: const Text(
-          'Chats',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+          'WhatsApp',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22,color: Colors.white),
         ),
         actions: [
           IconButton(
@@ -92,27 +87,23 @@ class HomePage extends StatelessWidget {
                 Get.offAndToNamed('/signIn');
               }
             },
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout,color: Colors.white,),
             tooltip: 'Log Out',
           ),
         ],
         elevation: 0,
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black),
-        centerTitle: true,
+        backgroundColor: Color(0xFF075E54),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-
-      // Body of the Home Page
       body: Column(
         children: [
-          // Search Bar (with refined design)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Search...',
-                hintStyle: TextStyle(color: Colors.grey[600]),
-                prefixIcon: const Icon(Icons.search, color: Colors.green),
+                hintText: 'Ask Meta AI or Search',
+                hintStyle: TextStyle(color: Colors.black87,fontSize: 14),
+                prefixIcon: const Icon(Icons.search, color: Colors.black87),
                 filled: true,
                 fillColor: Colors.grey[200],
                 border: OutlineInputBorder(
@@ -124,8 +115,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-
-          // FutureBuilder to get the list of users (chat list)
           Expanded(
             child: FutureBuilder(
               future: CloudFireStoreService.cloudFireStoreService
@@ -178,8 +167,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      trailing: const Icon(Icons.chat_bubble_outline,
-                          color: Colors.green),
+
                     );
                   },
                   separatorBuilder: (context, index) =>
@@ -191,33 +179,13 @@ class HomePage extends StatelessWidget {
         ],
       ),
 
-      // Floating Action Button (FAB) for new chat
+      // Floating Action Button for new chat
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.toNamed('/new-chat');
-        },
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.message),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.teal,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chats',
-          ),
-          BottomNavigationBarItem(
 
-            icon: Icon(Icons.update_sharp),
-            label: 'Updates',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.call),
-            label: 'Calls',
-          ),
-        ],
+        },
+        backgroundColor: const Color(0xFF075E54),
+        child: const Icon(Icons.message,color: Colors.white,),
       ),
     );
   }
