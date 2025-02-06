@@ -33,25 +33,34 @@ class HomePage extends StatelessWidget {
             return Column(
               children: [
                 DrawerHeader(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 45,
-                        backgroundImage: NetworkImage(userModel.image ??
-                            'https://www.w3schools.com/w3images/avatar2.png'),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        userModel.name ?? 'Name not available',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(userModel.email ?? 'Email not available',
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.grey)),
-                    ],
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage(userModel.image ??
+                              'https://www.w3schools.com/w3images/avatar2.png'),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            userModel.name ?? 'Name not available',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(userModel.email ?? 'Email not available',
+                              style: const TextStyle(
+                                  fontSize: 12, color: Colors.grey)),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -156,7 +165,7 @@ class HomePage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Last message or status here',
+                        (userList[index].isOnline)?'Online':"Offline",
                             style: TextStyle(
                                 color: Colors.grey[600], fontSize: 14),
                           ),

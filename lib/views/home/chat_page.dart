@@ -6,8 +6,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    CloudFireStoreService.cloudFireStoreService.editOnline(
+      email: AuthService.authService.getCurrentUser()!.email.toString(),
+      isOnline: true,
+    );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    CloudFireStoreService.cloudFireStoreService.editOnline(
+      email: AuthService.authService.getCurrentUser()!.email.toString(),
+      isOnline: false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +40,10 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           chatController.receiverName.value.toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          style:
+              const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: Color(0xFF075E54),
+        backgroundColor: const Color(0xFF075E54),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),

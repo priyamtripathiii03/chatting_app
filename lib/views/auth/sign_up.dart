@@ -44,7 +44,6 @@ class SignUp extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       const SizedBox(
                         height: 20,
                       ),
@@ -104,7 +103,6 @@ class SignUp extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-
                       TextButton(
                           onPressed: () {},
                           child: const Text('Already have Account? Sign Up')),
@@ -113,14 +111,22 @@ class SignUp extends StatelessWidget {
                       ),
                       ElevatedButton(
                           onPressed: () async {
-                            if(controller.txtPassword.text==controller.txtConfirmPassword.text)
-                            {
+                            if (controller.txtPassword.text ==
+                                controller.txtConfirmPassword.text) {
                               await AuthService.authService
                                   .createAccountWithEmailAndPassword(
-                                  controller.txtEmail.text,
-                                  controller.txtPassword.text);
-                              UserModel user =UserModel(name: controller.txtName.text, email: controller.txtEmail.text, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s", phone: controller.txtPhone.text, token: "----");
-                              CloudFireStoreService.cloudFireStoreService.insertUserIntroFireStore(user);
+                                      controller.txtEmail.text,
+                                      controller.txtPassword.text);
+                              UserModel user = UserModel(
+                                name: controller.txtName.text,
+                                email: controller.txtEmail.text,
+                                image:
+                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s",
+                                phone: controller.txtPhone.text,
+                                isOnline: false,
+                              );
+                              CloudFireStoreService.cloudFireStoreService
+                                  .insertUserIntroFireStore(user);
                               Get.back();
                               controller.txtEmail.clear();
                               controller.txtPassword.clear();
@@ -128,8 +134,6 @@ class SignUp extends StatelessWidget {
                               controller.txtName.clear();
                               controller.txtPhone.clear();
                             }
-
-
                           },
                           child: const Text('Sign Up'))
                     ],
