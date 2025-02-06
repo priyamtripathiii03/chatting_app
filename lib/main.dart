@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/chat',
-          page: () => const ChatPage(),
+          page: () => ChatPage(),
         ),
         GetPage(
           name: '/status',

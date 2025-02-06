@@ -135,7 +135,14 @@ class SignUp extends StatelessWidget {
                               controller.txtPhone.clear();
                             }
                           },
-                          child: const Text('Sign Up'))
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF075E54),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 80),
+                          ),
+                          child: Text('Sign Up',style: TextStyle(color: Colors.white),))
                     ],
                   ),
                 ]),
