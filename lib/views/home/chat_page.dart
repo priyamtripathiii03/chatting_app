@@ -1,5 +1,3 @@
-
-
 import 'package:chatting_app/model/chat_model.dart';
 import 'package:chatting_app/services/auth_service.dart';
 import 'package:chatting_app/services/cloud_firestore_service.dart';
@@ -17,10 +15,9 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           chatController.receiverName.value.toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Color(0xFF075E54),
-
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -49,7 +46,8 @@ class ChatPage extends StatelessWidget {
                     chatList.add(ChatModel.fromMap(snap.data() as Map));
                   }
                   return ListView.builder(
-                    reverse: false, // Reverse the chat order so that new messages appear at the bottom
+                    reverse: false,
+                    // Reverse the chat order so that new messages appear at the bottom
                     itemCount: chatList.length,
                     itemBuilder: (context, index) {
                       bool isSender = chatList[index].sender ==
@@ -58,7 +56,8 @@ class ChatPage extends StatelessWidget {
                         onLongPress: () {
                           if (isSender) {
                             chatController.txtUpdateMessage =
-                                TextEditingController(text: chatList[index].message);
+                                TextEditingController(
+                                    text: chatList[index].message);
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -77,11 +76,11 @@ class ChatPage extends StatelessWidget {
                                         CloudFireStoreService
                                             .cloudFireStoreService
                                             .updateChat(
-                                            chatController
-                                                .receiverEmail.value,
-                                            chatController
-                                                .txtUpdateMessage.text,
-                                            docId);
+                                                chatController
+                                                    .receiverEmail.value,
+                                                chatController
+                                                    .txtUpdateMessage.text,
+                                                docId);
                                         Get.back();
                                       },
                                       child: const Text('Update'),
@@ -94,8 +93,9 @@ class ChatPage extends StatelessWidget {
                         },
                         onDoubleTap: () {
                           if (isSender) {
-                            CloudFireStoreService.cloudFireStoreService.removeChat(
-                                docIdList[index], chatController.receiverEmail.value);
+                            CloudFireStoreService.cloudFireStoreService
+                                .removeChat(docIdList[index],
+                                    chatController.receiverEmail.value);
                           }
                         },
                         child: Align(
@@ -112,9 +112,39 @@ class ChatPage extends StatelessWidget {
                                   : Colors.grey[200],
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Text(
-                              chatList[index].message,
-                              style: const TextStyle(fontSize: 16),
+                            child: Column(
+                              children: [
+                                Text(
+                                  chatList[index].message,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      '''${(chatList[index].time.toDate().hour > 12) ? (chatList[index].time.toDate().hour % 12).toString().padLeft(2, '0') : (chatList[index].time.toDate().hour).toString().padLeft(2, '0')} : ${chatList[index].time.toDate().minute.toString().padLeft(2, '0')}''',
+                                      style: const TextStyle(
+                                        decoration: TextDecoration.none,
+                                        color: Colors.black,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 2,
+                                    ),
+                                    Text(
+                                      (chatList[index].time.toDate().hour <= 12)
+                                          ? ('AM')
+                                          : ('PM'),
+                                      style: const TextStyle(
+                                        decoration: TextDecoration.none,
+                                        color: Colors.black,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -131,25 +161,28 @@ class ChatPage extends StatelessWidget {
                 controller: chatController.txtMessage,
                 decoration: InputDecoration(
                   hintText: 'Type your message...',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.grey.shade200,
                   suffixIcon: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(onPressed: () {
-
-                      }, icon: const Icon(Icons.attach_file)),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.attach_file)),
                       IconButton(
                         onPressed: () async {
                           if (chatController.txtMessage.text.isNotEmpty) {
                             ChatModel chat = ChatModel(
-                              sender: AuthService.authService.getCurrentUser()!.email!,
+                              sender: AuthService.authService
+                                  .getCurrentUser()!
+                                  .email!,
                               receiver: chatController.receiverEmail.value,
                               message: chatController.txtMessage.text,
                               time: Timestamp.now(),
                             );
-                            await CloudFireStoreService.cloudFireStoreService.addChatInFireStore(chat);
+                            await CloudFireStoreService.cloudFireStoreService
+                                .addChatInFireStore(chat);
                             chatController.txtMessage.clear();
                           }
                         },
@@ -163,7 +196,6 @@ class ChatPage extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
 }
