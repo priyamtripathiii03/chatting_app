@@ -1,6 +1,7 @@
 import 'package:chatting_app/services/auth_service.dart';
 import 'package:chatting_app/views/auth/sign_in.dart';
 import 'package:chatting_app/views/home/home_page.dart';
+import 'package:chatting_app/views/home/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 class AuthManager extends StatelessWidget {
@@ -8,6 +9,6 @@ class AuthManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (AuthService.authService.getCurrentUser()==null)?const SignIn(): const HomePage();
+    return (AuthService.authService.getCurrentUser()==null)?const SignIn(): const SplashScreen();
   }
 }

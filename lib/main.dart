@@ -5,6 +5,7 @@ import 'package:chatting_app/views/home/bottom_navigationbar.dart';
 import 'package:chatting_app/views/home/call_page.dart';
 import 'package:chatting_app/views/home/chat_page.dart';
 import 'package:chatting_app/views/home/home_page.dart';
+import 'package:chatting_app/views/home/splash_screen.dart';
 import 'package:chatting_app/views/home/status_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/',
           page: () => const AuthManager(),
+        ),
+        GetPage(
+          name: '/splash',
+          page: () => const SplashScreen(),
         ),
         GetPage(
           name: '/signIn',
