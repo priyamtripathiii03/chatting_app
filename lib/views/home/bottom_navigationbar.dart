@@ -24,20 +24,13 @@ class BottomNavigationbar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               Icon(Icons.message, color: Colors.white),
-              Text(
-                'Chats',
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              ),
+
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               Icon(Icons.update_sharp, color: Colors.white),
-              Text(
-                'Status',
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              ),
             ],
           ),
 
@@ -45,10 +38,6 @@ class BottomNavigationbar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               Icon(Icons.call, color: Colors.white),
-              Text(
-                'Calls',
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              ),
             ],
           ),
 
