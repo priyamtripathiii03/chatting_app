@@ -90,5 +90,15 @@ Cross-Platform Support 🌐: Build your app for both iOS and Android with Fireba
 Start building your chatting app today with Firebase! 🛠️ Build fast, scale easily, and deliver an amazing real-time experience to your users. ⚡ Whether you're connecting friends, colleagues, or clients, this app will be ready to go! 🎉
 
 
+<p>
+     <img src="https://github.com/user-attachments/assets/9136fdb7-0599-428b-b0a6-5945cd5f2502"height="35%" width="22%">
+    <img src="https://github.com/user-attachments/assets/82b67d01-4825-4345-8a0a-cda406873241"height="35%" width="22%">
+    <img src="https://github.com/user-attachments/assets/d6740139-b06d-47fe-b9d9-8405040e903c"height="35%" width="22%">
+      <img src="https://github.com/user-attachments/assets/efc1e907-f2ef-4b36-851b-86d4ee0177cc"height="35%" width="22%">
+     <img src="https://github.com/user-attachments/assets/5cd6eb57-8b88-43af-bce8-d59cc9c87c7e"height="35%" width="22%">
+</p>
+
+
+
 
 
