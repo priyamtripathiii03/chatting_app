@@ -91,7 +91,8 @@ Start building your chatting app today with Firebase! 🛠️ Build fast, scale 
 
 
 <p>
-     <img src="https://github.com/user-attachments/assets/9136fdb7-0599-428b-b0a6-5945cd5f2502"height="35%" width="22%">
+    <img src="https://github.com/user-attachments/assets/91ce3e02-a830-45ce-b630-974bafc6475a"height="35%" width="22%">
+     <img src="https://github.com/user-attachments/assets/e30dee2e-823b-4216-86ad-cec8554a0a4f"height="35%" width="22%">
     <img src="https://github.com/user-attachments/assets/82b67d01-4825-4345-8a0a-cda406873241"height="35%" width="22%">
     <img src="https://github.com/user-attachments/assets/d6740139-b06d-47fe-b9d9-8405040e903c"height="35%" width="22%">
       <img src="https://github.com/user-attachments/assets/efc1e907-f2ef-4b36-851b-86d4ee0177cc"height="35%" width="22%">
